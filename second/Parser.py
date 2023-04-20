@@ -3,10 +3,23 @@ class Node:
     def __init__(self, value, type=None, children=None):
         self.value = value
         self.type = type
-        self.children = children
+        self.children = children or []
 
     def __str__(self):
         return f"value: {self.value}, type:{self.type}"
+
+
+class ArithmeticNode(Node):
+    def __init__(self, value, children=None):
+        super().__init__(value, "Arithmetic", children)
+
+    def check_types(self):
+        if self.children is None:
+            raise Exception("Ошибка при создании узла")
+
+        for child in self.children:
+            if not isinstance(child.value, (int, float)):
+                raise TypeError(f"Expected int or float, got {type(child.value)} for child {child}")
 
 
 class Parser:
@@ -35,9 +48,10 @@ class Parser:
             if next_value == "=":
                 node.children.append(self.assignment())
         elif value in ["+", "-", "*", "/"]:
-            node.children.append(Node(value, "Operator"))
+            node.children.append(ArithmeticNode(value))
             node.children.append(self.next_node())
             node.children.append(self.next_node())
+            node.children[0].check_types()
         return node
 
     def assignment(self):
@@ -54,6 +68,7 @@ class Parser:
                 raise Exception("Ошибка в присваивании")
         else:
             raise Exception("Ошибка в идентификаторе в присваивании")
+
     def for_range(self):
         children = []
         if self.lexemes[self.position].value == "for" and self.lexemes[self.position].type == "Keyword":

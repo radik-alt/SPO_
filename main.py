@@ -3,7 +3,7 @@ from second.Parser import Parser
 
 code = """
 counter = 0
-n = 5
+n = -5
 
 for i in range ( n ):
     counter += 1
