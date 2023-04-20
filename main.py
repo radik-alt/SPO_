@@ -18,19 +18,20 @@ def print_lexemes(lexemes):
 
 def print_node_list(node_list):
     for node in node_list:
-        print_node(node)
+        print_tree(node)
 
-def print_node(node, level=0):
-    indent = "  " * level
-    print(f"{indent}Value: {node.value}, Type: {node.type}")
-    if node.children:
-        print(f"{indent}Children:")
+
+def print_tree(node, level=0):
+    if node is None:
+        return
+    print(" " * level + str(node))
+    if node.children is not None:
         for child in node.children:
-            print_node(child, level=level+1)
+            print_tree(child, level=level+2)
 
 def main():
     lexemes = LexemAnalyz.lex_parse(code)
-    # print_lexemes(lexemes)
+    print_lexemes(lexemes)
 
     parser = Parser(lexemes)
     print_node_list(parser.parse())
