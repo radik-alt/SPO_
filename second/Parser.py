@@ -8,6 +8,10 @@ class Node:
     def __str__(self):
         return f"value: {self.value}, type:{self.type}"
 
+    def check_types(self):
+        if not isinstance(self.value, (int, float)):
+            raise Exception("Не соотвествует типу данных int или float")
+
 
 class ArithmeticNode(Node):
     def __init__(self, value, children=None):
@@ -62,7 +66,10 @@ class Parser:
             if self.lexemes[self.position].value == "=" and self.lexemes[self.position].type == "Assignment":
                 children.append(Node("=", "Assignment"))
                 self.position += 1
-                children.append(self.next_node())
+                if self.lexemes[self.position].type == "Integer":
+                    node = Node(int(self.lexemes[self.position].value), "Integer")
+                    node.check_types()
+                    children.append(node)
                 return Node("assignment", "Expression", children)
             else:
                 raise Exception("Ошибка в присваивании")

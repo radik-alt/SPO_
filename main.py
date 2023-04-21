@@ -1,9 +1,10 @@
 from first import LexemAnalyz
+from four.GeneratorJsCode import GeneratorJsCode
 from second.Parser import Parser
 
 code = """
 counter = 0
-n = -5
+n = 5
 
 for i in range ( n ):
     counter += 1
@@ -27,14 +28,26 @@ def print_tree(node, level=0):
     print(" " * level + str(node))
     if node.children is not None:
         for child in node.children:
-            print_tree(child, level=level+2)
+            level += 2
+            print_tree(child, level)
+    else:
+        level = 0
+
+
+
 
 def main():
     lexemes = LexemAnalyz.lex_parse(code)
     print_lexemes(lexemes)
 
+    print("\n")
+
     parser = Parser(lexemes)
-    print_node_list(parser.parse())
+    tree = parser.parse()
+    print_node_list(tree)
+
+    # js_code = generate_js_code(tree)
+    # print(js_code)
 
 
 if __name__ == '__main__':
