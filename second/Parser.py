@@ -12,10 +12,28 @@ class Node:
         if not isinstance(self.value, (int, float)):
             raise Exception("Не соотвествует типу данных int или float")
 
+    def check_logic(self):
+        if self.type != "Integer":
+            raise Exception("Не правильная логика! Можно присваивать только Integer")
+
 
 class ArithmeticNode(Node):
     def __init__(self, value, children=None):
         super().__init__(value, "Arithmetic", children)
+
+    def check_types(self):
+        if self.children is None:
+            raise Exception("Ошибка при создании узла")
+
+        for child in self.children:
+            if not isinstance(child.value, (int, float)):
+                raise TypeError(f"Expected int or float, got {type(child.value)} for child {child}")
+
+
+class LogicNode(Node):
+
+    def __init__(self, value, children=None):
+        super().__init__(value, "Logic", children)
 
     def check_types(self):
         if self.children is None:
@@ -66,10 +84,12 @@ class Parser:
             if self.lexemes[self.position].value == "=" and self.lexemes[self.position].type == "Assignment":
                 children.append(Node("=", "Assignment"))
                 self.position += 1
+                nex_node = Node(self.lexemes[self.position].value, self.lexemes[self.position].type)
+                nex_node.check_logic()
                 if self.lexemes[self.position].type == "Integer":
-                    node = Node(int(self.lexemes[self.position].value), "Integer")
-                    node.check_types()
-                    children.append(node)
+                    nex_node.value = int(nex_node.value)
+                    nex_node.check_types()
+                    children.append(nex_node)
                 return Node("assignment", "Expression", children)
             else:
                 raise Exception("Ошибка в присваивании")

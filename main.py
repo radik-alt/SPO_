@@ -3,7 +3,7 @@ from four.GeneratorJsCode import GeneratorJsCode
 from second.Parser import Parser
 
 code = """
-counter = 0
+counter = 5
 n = 5
 
 for i in range ( n ):
