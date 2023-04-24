@@ -38,17 +38,18 @@ def print_tree(node, level=0):
 
 def main():
     lexemes = LexemAnalyz.lex_parse(code)
-    print_lexemes(lexemes)
+    # print_lexemes(lexemes)
 
     print("\n")
 
     parser = Parser(lexemes)
     tree = parser.parse()
-    print_node_list(tree)
+    # print_node_list(tree)
 
     js_code = GenerateJS(tree)
+    print("Код на JS:\n")
     js_code.start()
-    print(js_code.code)
+    js_code.save_file()
 
 if __name__ == '__main__':
     main()
