@@ -76,6 +76,11 @@ class Parser:
             node.children[0].check_types()
         return node
 
+    def calculate(self):
+        self.position += 1
+        value = self.lexemes[self.position].value
+        type = self.lexemes[self.position].type
+
     def assignment(self):
         children = []
         if self.lexemes[self.position].type == "Identifier":

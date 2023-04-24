@@ -44,10 +44,11 @@ def main():
 
     parser = Parser(lexemes)
     tree = parser.parse()
-    # print_node_list(tree)
+    print_node_list(tree)
 
-    GenerateJS(tree).js_code()
-
+    js_code = GenerateJS(tree)
+    js_code.start()
+    print(js_code.code)
 
 if __name__ == '__main__':
     main()
