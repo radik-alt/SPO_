@@ -1,5 +1,5 @@
 from first import LexemAnalyz
-from four.GeneratorJsCode import GeneratorJsCode
+from four.GenerateJS import GenerateJS
 from second.Parser import Parser
 
 code = """
@@ -44,10 +44,9 @@ def main():
 
     parser = Parser(lexemes)
     tree = parser.parse()
-    print_node_list(tree)
+    # print_node_list(tree)
 
-    # js_code = generate_js_code(tree)
-    # print(js_code)
+    GenerateJS(tree).js_code()
 
 
 if __name__ == '__main__':
