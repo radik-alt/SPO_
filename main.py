@@ -4,7 +4,7 @@ from second.Parser import Parser
 
 code = """
 counter = 5
-n = 5
+n = 12
 
 for i in range ( n ):
     counter += 1
@@ -37,14 +37,18 @@ def print_tree(node, level=0):
 
 
 def main():
+    print("Список лексем: ")
     lexemes = LexemAnalyz.lex_parse(code)
-    # print_lexemes(lexemes)
+    print_lexemes(lexemes)
 
     print("\n")
 
+    print("AST дерево: ")
     parser = Parser(lexemes)
     tree = parser.parse()
-    # print_node_list(tree)
+    print_node_list(tree)
+
+    print("\n")
 
     js_code = GenerateJS(tree)
     print("Код на JS:\n")

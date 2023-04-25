@@ -23,7 +23,7 @@ class GenerateJS:
                     self.code += f"\tcounter {item.value}= "
                 elif item.type == "Integer":
                     self.code += f"{item.value};\n"
-                    self.code += f"\tconsole.log(n);\n"
+                    self.code += f"\tconsole.log(counter);\n"
                     self.code += "}"
 
     def save_file(self):
